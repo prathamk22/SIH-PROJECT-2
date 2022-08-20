@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/navigation_offers"
-        android:name="com.kanyideveloper.firebasecoroutinesdemo.ui.home.ui.offers.DashboardFragment"
+        android:name="com.kanyideveloper.firebasecoroutinesdemo.ui.home.ui.offers.OffersFragment"
         android:label="@string/title_offers"
         tools:layout="@layout/fragment_dashboard" />
 
@@ -33,6 +33,15 @@
         android:id="@+id/navigation_account"
         android:name="com.kanyideveloper.firebasecoroutinesdemo.ui.home.ui.account.AccountFragment"
         android:label="@string/title_account"
-        tools:layout="@layout/fragment_account" />
+        tools:layout="@layout/fragment_account" >
+        <action
+            android:id="@+id/action_navigation_account_to_garbageFragment"
+            app:destination="@id/garbageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/garbageFragment"
+        android:name="com.kanyideveloper.firebasecoroutinesdemo.ui.garbageHistory.GarbageFragment"
+        android:label="fragment_garbage"
+        tools:layout="@layout/fragment_garbage" />
 
 </navigation>

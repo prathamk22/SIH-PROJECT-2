@@ -1,4 +1,4 @@
-package com.kanyideveloper.firebasecoroutinesdemo.ui.home.ui.home
+package com.kanyideveloper.firebasecoroutinesdemo.ui.garbageHistory
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,13 +7,14 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.database.GenericTypeIndicator
 import com.kanyideveloper.firebasecoroutinesdemo.model.Posts
 import com.kanyideveloper.firebasecoroutinesdemo.model.UserPosts
+import com.kanyideveloper.firebasecoroutinesdemo.ui.home.ui.home.HomeRepository
 import com.kanyideveloper.firebasecoroutinesdemo.util.EventResponse
 import com.kanyideveloper.firebasecoroutinesdemo.util.Resource
-import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
-class HomeViewModel(
+class GarbageViewModel(
     private val repo: HomeRepository = HomeRepository()
 ) : ViewModel() {
 
@@ -28,7 +29,7 @@ class HomeViewModel(
     private fun observeAllPosts() {
         viewModelScope.launch {
             _state.postValue(Resource.Loading())
-            repo.getAllPosts()
+            repo.getAllUserPosts()
                 .map {
                     return@map when (it) {
                         is EventResponse.Cancelled -> {
@@ -36,9 +37,10 @@ class HomeViewModel(
                         }
                         is EventResponse.Changed -> {
                             val genericTypeIndicator =
-                                object : GenericTypeIndicator<List<Posts>>() {}
-                            val posts = (it.snapshot.getValue(genericTypeIndicator) ?: emptyList())
-                            Resource.Success(repo.transformToUserPostsFromListOfPosts(posts, viewModelScope))
+                                object : GenericTypeIndicator<List<String>>() {}
+                            val postIdsList = (it.snapshot.getValue(genericTypeIndicator) ?: emptyList())
+                            val postLists = repo.getAllPostsFromIds(postIdsList)
+                            Resource.Success(repo.transformToUserPostsFromListOfPosts(postLists, viewModelScope))
                         }
                     }
                 }
@@ -47,5 +49,6 @@ class HomeViewModel(
                 }
         }
     }
+
 
 }

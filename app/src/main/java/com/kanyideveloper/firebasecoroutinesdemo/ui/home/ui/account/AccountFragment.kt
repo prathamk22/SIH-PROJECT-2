@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.kanyideveloper.firebasecoroutinesdemo.R
 import com.kanyideveloper.firebasecoroutinesdemo.databinding.FragmentAccountBinding
 import com.kanyideveloper.firebasecoroutinesdemo.databinding.FragmentNotificationsBinding
@@ -43,6 +44,9 @@ class AccountFragment : Fragment() {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             })
             requireActivity().finish()
+        }
+        binding.garbageHistory.setOnClickListener {
+            findNavController().navigate(R.id.garbageFragment)
         }
     }
 
