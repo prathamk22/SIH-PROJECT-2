@@ -1,6 +1,8 @@
 package com.kanyideveloper.firebasecoroutinesdemo.util
 
+import android.content.Context
 import android.content.SharedPreferences
+import android.widget.Toast
 
 fun SharedPreferences.save(key: String, value: Any) {
     val edit = this.edit()
@@ -15,4 +17,9 @@ fun SharedPreferences.save(key: String, value: Any) {
         }
     }
     edit.apply()
+}
+
+fun Context.showToast(message: String){
+    Toast.makeText(this, message, Toast.LENGTH_SHORT)
+        .show()
 }
