@@ -27,20 +27,9 @@ class AddPostViewModel(
                 _status.value = Resource.Error("Image is not selected. Please select a image.")
                 return@launch
             }
-            when (val result = repo.uploadImage(imageComment, imagePath)) {
-                is Resource.Error -> {
-                    Log.e("TAG", "uploadImage: $result", )
-                }
-                is Resource.Idle -> {
-
-                }
-                is Resource.Loading -> {
-
-                }
-                is Resource.Success -> {
-                    Log.e("TAG", "uploadImage: $result", )
-                }
-            }
+            _status.postValue(Resource.Loading())
+            val result = repo.uploadImage(imageComment, imagePath)
+            _status.postValue(result)
         }
     }
 

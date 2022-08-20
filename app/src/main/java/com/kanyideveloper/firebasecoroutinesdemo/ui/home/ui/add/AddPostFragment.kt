@@ -71,6 +71,11 @@ class AddPostFragment : Fragment() {
                 }
                 is Resource.Success -> {
                     binding.progressBar.isVisible = false
+                    if (it.data) {
+                        requireContext().showToast("Added a new Post")
+                    } else {
+                        requireContext().showToast("Something went wrong. Please try again.")
+                    }
                 }
                 is Resource.Idle -> {}
             }

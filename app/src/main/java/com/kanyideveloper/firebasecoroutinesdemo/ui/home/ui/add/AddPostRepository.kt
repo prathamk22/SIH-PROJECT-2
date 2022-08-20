@@ -77,7 +77,7 @@ class AddPostRepository(
                 userReference.child(userId).child("posts").setValue(userPosts).await()
             }
             listOf(addedPosts, addedInUserPosts).awaitAll()
-            Resource.Success(addedPosts)
+            Resource.Success(true)
         }
     }
 

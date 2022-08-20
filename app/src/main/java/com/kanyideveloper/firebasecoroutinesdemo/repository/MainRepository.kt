@@ -20,7 +20,7 @@ class MainRepository {
             safeCall {
                 val registrationResult = firebaseAuth.createUserWithEmailAndPassword(userEmailAddress, userLoginPassword).await()
                 val userId = registrationResult.user?.uid!!
-                val newUser = User(userName, userEmailAddress, userPhoneNum)
+                val newUser = User(id = userId, userName, userEmailAddress, userPhoneNum)
                 databaseReference.child(userId).setValue(newUser).await()
                 PreferenceHelper.userId = userId
                 PreferenceHelper.isLoggedIn = true
