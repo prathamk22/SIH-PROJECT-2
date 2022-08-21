@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.sih.project.databinding.FragmentGarbageBinding
 import com.sih.project.ui.home.ui.home.HomeRecyclerAdapter
 import com.sih.project.util.Resource
@@ -33,6 +34,11 @@ class GarbageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.toolbar.apply {
+            setNavigationOnClickListener {
+                findNavController().navigateUp()
+            }
+        }
         binding.homeRv.apply {
             adapter = homePostsRecyclerAdapter
         }

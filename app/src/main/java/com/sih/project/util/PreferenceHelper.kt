@@ -9,6 +9,7 @@ import java.lang.ref.WeakReference
 object PreferenceHelper {
 
     private const val USER_ID = "userId"
+    private const val USER_TYPE = "userType"
     private const val LOGGED_IN = "userLoggedIn"
     private const val APP_SHARED_PREFS = "smartBinsPrefs"
 
@@ -31,6 +32,13 @@ object PreferenceHelper {
         get() = prefs?.getString(USER_ID, "") ?: ""
         set(value) {
             prefs?.save(USER_ID, value)
+        }
+
+    @JvmStatic
+    var userType: String
+        get() = prefs?.getString(USER_TYPE, "") ?: ""
+        set(value) {
+            prefs?.save(USER_TYPE, value)
         }
 
     @JvmStatic

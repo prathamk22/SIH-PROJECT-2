@@ -7,9 +7,12 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.sih.project.databinding.ActivityLoginBinding
+import com.sih.project.model.User
+import com.sih.project.ui.garbageCollectorUI.GarbageCollectorActivity
 import com.sih.project.ui.home.HomeActivity
 import com.sih.project.util.PreferenceHelper
 import com.sih.project.util.Resource
+import com.sih.project.util.UserTypes
 import com.sih.project.viewmodel.MainViewModel
 
 class LoginActivity : AppCompatActivity() {
@@ -19,7 +22,11 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (PreferenceHelper.isLoggedIn) {
-            startActivity(Intent(this, HomeActivity::class.java))
+            if (UserTypes.valueOf(PreferenceHelper.userType) == UserTypes.USER) {
+                startActivity(Intent(this, HomeActivity::class.java))
+            } else {
+                startActivity(Intent(this, GarbageCollectorActivity::class.java))
+            }
             finish()
             return
         }
@@ -49,7 +56,14 @@ class LoginActivity : AppCompatActivity() {
                     binding.loginProgressBar.isVisible = false
                     Toast.makeText(applicationContext, "Logged In Successfully", Toast.LENGTH_SHORT)
                         .show()
-                    startActivity(Intent(this, HomeActivity::class.java))
+                    when (UserTypes.valueOf(it.data.type ?: UserTypes.USER.name)) {
+                        UserTypes.USER -> {
+                            startActivity(Intent(this, HomeActivity::class.java))
+                        }
+                        UserTypes.COLLECTOR -> {
+                            startActivity(Intent(this, GarbageCollectorActivity::class.java))
+                        }
+                    }
                     finish()
                 }
                 is Resource.Error -> {

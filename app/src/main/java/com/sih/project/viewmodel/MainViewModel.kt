@@ -3,6 +3,7 @@ package com.sih.project.viewmodel
 import android.util.Patterns
 import androidx.lifecycle.*
 import com.google.firebase.auth.AuthResult
+import com.sih.project.model.User
 import com.sih.project.repository.MainRepository
 import com.sih.project.util.Resource
 import kotlinx.coroutines.Dispatchers
@@ -13,8 +14,8 @@ class MainViewModel : ViewModel() {
     private val _userRegistrationStatus = MutableLiveData<Resource<AuthResult>>()
     val userRegistrationStatus: LiveData<Resource<AuthResult>> = _userRegistrationStatus
 
-    private val _userSignUpStatus = MutableLiveData<Resource<AuthResult>>()
-    val userSignUpStatus: LiveData<Resource<AuthResult>> = _userSignUpStatus
+    private val _userSignUpStatus = MutableLiveData<Resource<User>>()
+    val userSignUpStatus: LiveData<Resource<User>> = _userSignUpStatus
 
     private val mainRepository = MainRepository()
 
