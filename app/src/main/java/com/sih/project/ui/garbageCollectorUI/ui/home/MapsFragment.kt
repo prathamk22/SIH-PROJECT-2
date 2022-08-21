@@ -17,10 +17,28 @@ import com.sih.project.R
 
 class MapsFragment : Fragment() {
 
+    private val latLongs = listOf(
+        "Manipal University" to LatLng(26.84386, 75.5630456),
+        "Temptation Jaipur" to LatLng(26.8397479, 75.5653213),
+        "Highland Farms" to LatLng(26.8397479, 75.5653213),
+        "Sajjan Court" to LatLng(26.8415545, 75.560807),
+        "Pioneer Hospital" to LatLng(26.8345718, 75.5582138),
+        "Miracle Print Pack" to LatLng(26.8309593, 75.5575507),
+        "Bhanwar Singh Palace" to LatLng(26.8309593, 75.5575507),
+        "Mahavidhalaya" to LatLng(26.8283203, 75.5591401),
+        "Dhami" to LatLng(26.8300544, 75.5816379),
+    )
+
     private val callback = OnMapReadyCallback { googleMap ->
-        val sydney = LatLng(-34.0, 151.0)
-        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        latLongs.forEach {
+            googleMap.addMarker(
+                MarkerOptions()
+                    .position(it.second)
+                    .title(it.first)
+                    .draggable(false)
+            )
+        }
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLongs.first().second, 14f))
     }
 
     override fun onCreateView(
