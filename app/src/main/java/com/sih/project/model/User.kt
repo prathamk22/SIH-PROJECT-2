@@ -8,4 +8,4 @@ data class User(
     var email: String? = "",
     var phone: String? = "",
     var type: String? = UserTypes.USER.name
-)
+): java.io.Serializable

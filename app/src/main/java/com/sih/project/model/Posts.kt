@@ -9,4 +9,4 @@ data class Posts(
     val likes: Int? = null,
     val comments: Int? = null,
     val status: String? = null,
-)
+): java.io.Serializable

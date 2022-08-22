@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.sih.project.ui.garbageCollectorUI.ui.home.MapsFragment"
+        android:name="com.sih.project.ui.garbageCollectorUI.ui.maps.MapsFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
