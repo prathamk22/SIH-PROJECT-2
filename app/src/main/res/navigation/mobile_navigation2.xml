@@ -12,10 +12,10 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.sih.project.ui.garbageCollectorUI.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_ongoing_trips"
+        android:name="com.sih.project.ui.garbageCollectorUI.ui.onGoingTrips.OnGoingTripsFragment"
+        android:label="@string/ongoing_trips"
+        tools:layout="@layout/fragment_ongoing_trip" />
 
     <fragment
         android:id="@+id/nav_slideshow"
