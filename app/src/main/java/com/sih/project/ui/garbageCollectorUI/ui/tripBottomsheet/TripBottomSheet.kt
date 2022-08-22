@@ -8,11 +8,15 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.GenericTypeIndicator
 import com.sih.project.databinding.FragmentTripBottomSheetBinding
-import com.sih.project.model.PostsStatus
-import com.sih.project.model.UserPosts
-import com.sih.project.util.loadImage
-import com.sih.project.util.openInMaps
+import com.sih.project.model.*
+import com.sih.project.util.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.tasks.await
+import java.util.*
 
 class TripBottomSheet : BottomSheetDialogFragment() {
 
@@ -55,6 +59,66 @@ class TripBottomSheet : BottomSheetDialogFragment() {
             binding.successGroup.isVisible = false
         }
         binding.startJourney.setOnClickListener {
+            GlobalScope.launch {
+                val tripReference: DatabaseReference = FirebaseDatabase.getInstance()
+                    .getReference("trips")
+                val userReference: DatabaseReference = FirebaseDatabase.getInstance()
+                    .getReference("users")
+                withContext(Dispatchers.IO) {
+                    safeCall {
+                        val tripId = UUID.randomUUID().toString()
+                        val addedPosts = async {
+                            val typeIndicator =
+                                object : GenericTypeIndicator<MutableList<TripEntity>>() {}
+                            var trips = tripReference.get().await().getValue(typeIndicator)
+                            if (trips.isNullOrEmpty()) {
+                                val tripList = mutableListOf<TripEntity>()
+                                tripList.add(
+                                    TripEntity(
+                                        id = tripId,
+                                        userId = PreferenceHelper.userId,
+                                        time = System.currentTimeMillis(),
+                                        status = TripStatus.ONGOING.name,
+                                        latitude = arguments?.getDouble(LATITUDE)!!,
+                                        longitute = arguments?.getDouble(LONGITUDE)!!,
+                                        postId = (arguments?.getSerializable(POST_ID) as? UserPosts)?.posts?.id
+                                    )
+                                )
+                                trips = tripList
+                            } else {
+                                trips.add(
+                                    TripEntity(
+                                        id = tripId,
+                                        userId = PreferenceHelper.userId,
+                                        time = System.currentTimeMillis(),
+                                        status = TripStatus.ONGOING.name,
+                                        latitude = arguments?.getDouble(LATITUDE)!!,
+                                        longitute = arguments?.getDouble(LONGITUDE)!!,
+                                        postId = (arguments?.getSerializable(POST_ID) as? UserPosts)?.posts?.id
+                                    )
+                                )
+                            }
+                            tripReference.setValue(trips).await()
+                        }
+                        val addedInUserPosts = async {
+                            val typeIndicator =
+                                object : GenericTypeIndicator<MutableList<String>>() {}
+                            var userTrips =
+                                userReference.child(PreferenceHelper.userId).child("trips").get()
+                                    .await().getValue(typeIndicator)
+                            if (userTrips.isNullOrEmpty()) {
+                                userTrips = mutableListOf(tripId)
+                            } else {
+                                userTrips.add(tripId)
+                            }
+                            userReference.child(PreferenceHelper.userId).child("trips")
+                                .setValue(userTrips).await()
+                        }
+                        listOf(addedPosts, addedInUserPosts).awaitAll()
+                        Resource.Success(true)
+                    }
+                }
+            }
             LatLng(arguments?.getDouble(LATITUDE)!!, arguments?.getDouble(LONGITUDE)!!).openInMaps(
                 requireContext()
             )
