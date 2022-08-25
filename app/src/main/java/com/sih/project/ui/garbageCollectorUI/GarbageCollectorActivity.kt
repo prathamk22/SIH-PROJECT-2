@@ -13,6 +13,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.sih.project.R
 import com.sih.project.databinding.ActivityGarbageCollectorBinding
+import com.sih.project.util.Utils
 
 
 class GarbageCollectorActivity : AppCompatActivity() {
@@ -40,6 +41,12 @@ class GarbageCollectorActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        navView.setNavigationItemSelectedListener {
+            if (it.itemId == R.id.logout){
+                Utils.logout(this)
+            }
+            it.itemId == R.id.logout
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

@@ -12,6 +12,7 @@ import com.sih.project.R
 import com.sih.project.databinding.FragmentAccountBinding
 import com.sih.project.ui.LoginActivity
 import com.sih.project.util.PreferenceHelper
+import com.sih.project.util.Utils
 
 class AccountFragment : Fragment() {
 
@@ -35,12 +36,7 @@ class AccountFragment : Fragment() {
             binding.personEmail.text = it.email
         }
         binding.logout.setOnClickListener {
-            PreferenceHelper.userId = ""
-            PreferenceHelper.isLoggedIn = false
-            startActivity(Intent(requireContext(), LoginActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            })
-            requireActivity().finish()
+            Utils.logout(requireActivity())
         }
         binding.garbageHistory.setOnClickListener {
             findNavController().navigate(R.id.garbageFragment)
