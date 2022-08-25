@@ -35,7 +35,7 @@ class GarbageCollectorActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_ongoing_trips, R.id.nav_slideshow
+                R.id.nav_home, R.id.nav_ongoing_trips, R.id.navigation_offers , R.id.nav_slideshow
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
