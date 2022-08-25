@@ -1,4 +1,4 @@
-package com.sih.project.ui.home.ui.home
+package com.sih.project.ui.userVerificationRequired
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,12 +6,12 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.sih.project.databinding.HomeItemRvBinding
+import com.sih.project.databinding.UserVerificationItemBinding
 import com.sih.project.model.PostsStatus
 import com.sih.project.model.UserPosts
 import com.sih.project.util.loadImage
 
-class HomeRecyclerAdapter : ListAdapter<UserPosts, UserPostsViewHolder>(
+class UserVerificationAdapter(private val verificationListener: (UserPosts) -> Unit) : ListAdapter<UserPosts, UserVerificationViewHolder>(
     object : DiffUtil.ItemCallback<UserPosts>() {
         override fun areItemsTheSame(oldItem: UserPosts, newItem: UserPosts): Boolean {
             return oldItem == newItem
@@ -23,16 +23,19 @@ class HomeRecyclerAdapter : ListAdapter<UserPosts, UserPostsViewHolder>(
 
     }
 ) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserPostsViewHolder {
-        return UserPostsViewHolder(HomeItemRvBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserVerificationViewHolder {
+        return UserVerificationViewHolder(UserVerificationItemBinding.inflate(LayoutInflater.from(parent.context), parent, false), verificationListener)
     }
 
-    override fun onBindViewHolder(holder: UserPostsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: UserVerificationViewHolder, position: Int) {
         holder.bind(getItem(position), position)
     }
 }
 
-class UserPostsViewHolder(private val binding: HomeItemRvBinding) : RecyclerView.ViewHolder(binding.root) {
+class UserVerificationViewHolder(
+    private val binding: UserVerificationItemBinding,
+    private val verificationListener: (UserPosts) -> Unit
+) : RecyclerView.ViewHolder(binding.root) {
     fun bind(item: UserPosts?, position: Int) {
         if (item == null)
             return
@@ -42,6 +45,9 @@ class UserPostsViewHolder(private val binding: HomeItemRvBinding) : RecyclerView
         with(PostsStatus.valueOf(item.posts?.status ?: "")) {
             binding.postStatus.text = text
             binding.postStatus.setTextColor(ContextCompat.getColor(binding.root.context, colorId))
+        }
+        binding.verifyPost.setOnClickListener {
+            verificationListener.invoke(item)
         }
     }
 

@@ -48,51 +48,6 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/moneyIcon"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginStart="10dp"
-                    android:padding="6dp"
-                    android:src="@drawable/ic_baseline_monetization_on_24"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    style="@style/TextAppearance.AppCompat.Body2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:text="@string/swachh_wallet"
-                    app:layout_constraintBottom_toBottomOf="@+id/moneyIcon"
-                    app:layout_constraintStart_toEndOf="@+id/moneyIcon"
-                    app:layout_constraintTop_toTopOf="@+id/moneyIcon" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
-                    app:layout_constraintBottom_toBottomOf="@+id/moneyIcon"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/moneyIcon" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="1dp">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
                     android:id="@+id/profileIcon"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
@@ -144,7 +99,7 @@
                     android:layout_height="48dp"
                     android:layout_marginStart="10dp"
                     android:padding="10dp"
-                    android:src="@drawable/ic_baseline_person_24"
+                    android:src="@drawable/ic_baseline_history_24"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -166,6 +121,52 @@
                     app:layout_constraintBottom_toBottomOf="@+id/historyIcon"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/historyIcon" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/userVerificationContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="1dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/userVerificationIcon"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="10dp"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_baseline_verified_24"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.Body2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/userVerification"
+                    app:layout_constraintBottom_toBottomOf="@+id/userVerificationIcon"
+                    app:layout_constraintStart_toEndOf="@+id/userVerificationIcon"
+                    app:layout_constraintTop_toTopOf="@+id/userVerificationIcon" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
+                    app:layout_constraintBottom_toBottomOf="@+id/userVerificationIcon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/userVerificationIcon" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

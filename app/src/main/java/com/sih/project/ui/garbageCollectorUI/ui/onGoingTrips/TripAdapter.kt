@@ -3,6 +3,7 @@ package com.sih.project.ui.garbageCollectorUI.ui.onGoingTrips
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -69,7 +70,10 @@ class CollectorTripViewHolder(
         binding.homeImage.loadImage(item.userPosts.posts?.imageUrl)
         binding.personName.text = item.userPosts.user?.name ?: ""
         binding.userComment.text = item.userPosts.posts?.userCaption ?: ""
-        binding.postStatus.text = PostsStatus.valueOf(item.userPosts.posts?.status ?: "").text
+        with(PostsStatus.valueOf(item.userPosts.posts?.status ?: "")) {
+            binding.postStatus.text = text
+            binding.postStatus.setTextColor(ContextCompat.getColor(binding.root.context, colorId))
+        }
         binding.updateStatus.setOnClickListener {
             onUpdateStatus.invoke(binding.statusSpinner.selectedItem.toString(), item)
         }

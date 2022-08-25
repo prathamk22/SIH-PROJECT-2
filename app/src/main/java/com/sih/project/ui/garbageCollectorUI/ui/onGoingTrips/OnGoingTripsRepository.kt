@@ -66,8 +66,12 @@ class OnGoingTripsRepository(
         withContext(Dispatchers.IO) {
             val posts =
                 postsReference.get().await().getValue<MutableList<Posts>>() ?: return@withContext
+            val asPerSystemStatus = when (status) {
+                PostsStatus.COMPLETED -> PostsStatus.USER_VERIFICATION
+                else -> status
+            }
             val currentPost = posts.first { it.id.equals(item?.userPosts?.posts?.id, true) }
-                .copy(status = status.name)
+                .copy(status = asPerSystemStatus.name)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 posts.removeAll {
                     (it.id.equals(item?.userPosts?.posts?.id, true))

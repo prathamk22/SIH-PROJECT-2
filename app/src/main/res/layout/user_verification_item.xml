@@ -57,8 +57,8 @@
             android:layout_marginTop="10dp"
             android:maxHeight="300dp"
             android:scaleType="center"
-            app:layout_constraintHeight_max="300dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_max="300dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/userComment" />
 
@@ -73,6 +73,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/person"
             tools:text="Pratham Khurana" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/verifyPost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="Verify Collection"
+            app:layout_constraintTop_toBottomOf="@id/homeImage" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

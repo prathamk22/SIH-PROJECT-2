@@ -37,11 +37,19 @@
         <action
             android:id="@+id/action_navigation_account_to_garbageFragment"
             app:destination="@id/garbageFragment" />
+        <action
+            android:id="@+id/action_navigation_account_to_userVerificationFragment"
+            app:destination="@id/userVerificationFragment" />
     </fragment>
     <fragment
         android:id="@+id/garbageFragment"
         android:name="com.sih.project.ui.garbageHistory.GarbageFragment"
         android:label="fragment_garbage"
         tools:layout="@layout/fragment_garbage" />
+    <fragment
+        android:id="@+id/userVerificationFragment"
+        android:name="com.sih.project.ui.userVerificationRequired.UserVerificationFragment"
+        android:label="fragment_user_verification"
+        tools:layout="@layout/fragment_user_verification" />
 
 </navigation>

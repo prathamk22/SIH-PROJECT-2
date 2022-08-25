@@ -38,6 +38,9 @@ class AccountFragment : Fragment() {
         binding.logout.setOnClickListener {
             Utils.logout(requireActivity())
         }
+        binding.userVerificationContainer.setOnClickListener {
+            findNavController().navigate(R.id.userVerificationFragment)
+        }
         binding.garbageHistory.setOnClickListener {
             findNavController().navigate(R.id.garbageFragment)
         }
