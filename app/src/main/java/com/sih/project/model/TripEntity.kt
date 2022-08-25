@@ -13,5 +13,6 @@ data class TripEntity(
 enum class TripStatus{
     ONGOING,
     COMPLETED,
-    FAILED
+    FAILED;
+
 }

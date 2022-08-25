@@ -1,6 +1,7 @@
 package com.sih.project.ui.garbageCollectorUI.ui.onGoingTrips
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sih.project.databinding.FragmentOngoingTripBinding
+import com.sih.project.model.CollectorTripEntity
 import com.sih.project.util.Resource
 import com.sih.project.util.showToast
 
@@ -19,7 +21,7 @@ class OnGoingTripsFragment : Fragment() {
 
     private val viewModel: OnGoingTripsViewModel by viewModels()
     private val tripAdapter: TripAdapter by lazy {
-        TripAdapter()
+        TripAdapter(::onUpdateStatus)
     }
 
     override fun onCreateView(
@@ -55,6 +57,10 @@ class OnGoingTripsFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun onUpdateStatus(selectedItem: String, item: CollectorTripEntity?) {
+        viewModel.updateTripStatus(selectedItem, item)
     }
 
     override fun onDestroyView() {
