@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sih.project">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:name="com.sih.project.SmartBinsApp"
         android:allowBackup="true"
@@ -36,6 +38,9 @@
         <activity
             android:name="com.sih.project.ui.RegisterActivity"
             android:exported="false" />
+        <activity
+            android:name="com.sih.project.ui.BarcodeScanningActivity"
+            android:exported="false" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -46,6 +51,9 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
+        <meta-data
+            android:name="com.google.mlkit.vision.DEPENDENCIES"
+            android:value="barcode" />
     </application>
 
 </manifest>

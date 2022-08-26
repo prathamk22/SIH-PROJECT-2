@@ -1,9 +1,11 @@
 package com.sih.project.ui.garbageCollectorUI.ui.tripBottomsheet
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import com.google.android.gms.maps.model.LatLng
@@ -54,9 +56,21 @@ class TripBottomSheet : BottomSheetDialogFragment() {
             binding.userPost.homeImage.loadImage(item.posts?.imageUrl)
             binding.userPost.personName.text = item.user?.name ?: ""
             binding.userPost.userComment.text = item.posts?.userCaption ?: ""
-            binding.userPost.postStatus.text = PostsStatus.valueOf(item.posts?.status ?: "").text
+            with(PostsStatus.valueOf(item.posts?.status ?: "")) {
+                binding.userPost.postStatus.text = text
+                binding.userPost.postStatus.setTextColor(
+                    ContextCompat.getColor(
+                        binding.root.context,
+                        colorId
+                    )
+                )
+                if (this == PostsStatus.COMPLETED) {
+                    binding.startJourney.isVisible = false
+                }
+            }
         } ?: run {
-            binding.successGroup.isVisible = false
+            binding.startJourney.isVisible = false
+            binding.userPost.root.isVisible = false
         }
         binding.startJourney.setOnClickListener {
             GlobalScope.launch {

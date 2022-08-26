@@ -56,8 +56,8 @@ class UserVerificationFragment : Fragment() {
         }
     }
 
-    fun onVerificationClicked(post: UserPosts) {
-
+    private fun onVerificationClicked(post: UserPosts) {
+        viewModel.garbageCollectionVerified(post)
     }
 
 }

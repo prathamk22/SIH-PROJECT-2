@@ -32,4 +32,10 @@ class UserVerificationViewModel(
         }
     }
 
+    fun garbageCollectionVerified(post: UserPosts) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.garbageCollectionVerified(post)
+        }
+    }
+
 }

@@ -14,6 +14,16 @@
         android:scaleType="center"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/addPost"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_baseline_add_24"
+        app:layout_constraintBottom_toBottomOf="@id/garbageImage"
+        app:layout_constraintEnd_toEndOf="@id/garbageImage"
+        app:layout_constraintStart_toStartOf="@id/garbageImage"
+        app:layout_constraintTop_toTopOf="@+id/garbageImage" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/editTextComments"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -67,6 +77,7 @@
         android:layout_margin="6dp"
         android:contentDescription="Camera"
         android:src="@drawable/ic_baseline_photo_album_24"
+        android:visibility="gone"
         app:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

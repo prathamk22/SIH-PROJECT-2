@@ -1,16 +1,21 @@
 package com.sih.project.ui.garbageCollectorUI.ui.onGoingTrips
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sih.project.databinding.FragmentOngoingTripBinding
 import com.sih.project.model.CollectorTripEntity
+import com.sih.project.model.PostsStatus
+import com.sih.project.model.getItem
+import com.sih.project.ui.BarcodeScanningActivity
 import com.sih.project.util.Resource
 import com.sih.project.util.showToast
 
@@ -23,6 +28,29 @@ class OnGoingTripsFragment : Fragment() {
     private val tripAdapter: TripAdapter by lazy {
         TripAdapter(::onUpdateStatus)
     }
+
+    private var selectedItem: String? = null
+    private var item: CollectorTripEntity? = null
+
+    private val barcodeScanResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == RESULT_OK) {
+                val bundle = it.data?.extras!!
+                if (bundle.containsKey("status") && bundle.getString("status")
+                        ?.equals("success", true) == true
+                ) {
+                    if (selectedItem != null && item != null) {
+                        viewModel.updateTripStatus(selectedItem!!, item)
+                        selectedItem = null
+                        item = null
+                    }
+                } else {
+                    requireContext().showToast("Verify the Garbage bin to continue")
+                }
+            } else {
+                requireContext().showToast("Verify the Garbage bin to continue")
+            }
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,7 +88,13 @@ class OnGoingTripsFragment : Fragment() {
     }
 
     private fun onUpdateStatus(selectedItem: String, item: CollectorTripEntity?) {
-        viewModel.updateTripStatus(selectedItem, item)
+        if (getItem(selectedItem) == PostsStatus.COMPLETED) {
+            this.selectedItem = selectedItem
+            this.item = item
+            barcodeScanResult.launch(Intent(requireContext(), BarcodeScanningActivity::class.java))
+        } else {
+            viewModel.updateTripStatus(selectedItem, item)
+        }
     }
 
     override fun onDestroyView() {

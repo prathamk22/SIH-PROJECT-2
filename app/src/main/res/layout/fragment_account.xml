@@ -35,6 +35,15 @@
             android:textAlignment="center"
             tools:text="prathamkhurana43@gmail.com" />
 
+        <TextView
+            android:id="@+id/personRank"
+            style="@style/TextAppearance.AppCompat.Caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="#417C45"
+            tools:text="#11 in Karol bagh" />
+
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

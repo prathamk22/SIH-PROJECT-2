@@ -1,9 +1,6 @@
 package com.sih.project.ui.garbageCollectorUI.ui.onGoingTrips
 
 import android.os.Build
-import android.util.Log
-import androidx.annotation.RequiresApi
-import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.getValue
@@ -12,7 +9,6 @@ import com.sih.project.util.EventResponse
 import com.sih.project.util.PreferenceHelper
 import com.sih.project.util.valueEventFlow
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
@@ -64,17 +60,24 @@ class OnGoingTripsRepository(
 
     suspend fun updateStatus(status: PostsStatus, item: CollectorTripEntity?) =
         withContext(Dispatchers.IO) {
-            val posts =
-                postsReference.get().await().getValue<MutableList<Posts>>() ?: return@withContext
             val asPerSystemStatus = when (status) {
                 PostsStatus.COMPLETED -> PostsStatus.USER_VERIFICATION
                 else -> status
             }
+            val posts =
+                postsReference.get().await().getValue<MutableList<Posts>>() ?: return@withContext
             val currentPost = posts.first { it.id.equals(item?.userPosts?.posts?.id, true) }
-                .copy(status = asPerSystemStatus.name)
+                .copy(status = status.name)
+            updateUserPostStatus(currentPost, asPerSystemStatus)
+        }
+
+    suspend fun updateUserPostStatus(currentPost: Posts, status: PostsStatus) =
+        withContext(Dispatchers.IO) {
+            val posts =
+                postsReference.get().await().getValue<MutableList<Posts>>() ?: return@withContext
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 posts.removeAll {
-                    (it.id.equals(item?.userPosts?.posts?.id, true))
+                    (it.id.equals(currentPost.id, true))
                 }
                 posts.add(currentPost)
                 postsReference.setValue(posts).await()

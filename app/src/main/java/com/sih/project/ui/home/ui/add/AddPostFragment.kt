@@ -26,6 +26,7 @@ class AddPostFragment : Fragment() {
         registerForActivityResult(ActivityResultContracts.TakePicture()) { success: Boolean ->
             if (success) {
                 latestTmpUri?.let {
+                    binding.addPost.isVisible = false
                     binding.garbageImage.setImageURI(it)
                 }
             }
@@ -54,6 +55,7 @@ class AddPostFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.addFromCamera.setOnClickListener { takeImage() }
+        binding.addPost.setOnClickListener { takeImage() }
         binding.addFromGallery.setOnClickListener { selectImageFromGalleryResult.launch("image/*") }
 
         binding.uploadButton.setOnClickListener {
@@ -81,7 +83,7 @@ class AddPostFragment : Fragment() {
             }
             viewModel.setIdle()
         }
-
+        takeImage()
     }
 
     private fun takeImage() {

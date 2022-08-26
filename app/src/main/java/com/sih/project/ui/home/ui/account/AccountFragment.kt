@@ -13,6 +13,8 @@ import com.sih.project.databinding.FragmentAccountBinding
 import com.sih.project.ui.LoginActivity
 import com.sih.project.util.PreferenceHelper
 import com.sih.project.util.Utils
+import java.util.Random
+import kotlin.random.asKotlinRandom
 
 class AccountFragment : Fragment() {
 
@@ -34,6 +36,7 @@ class AccountFragment : Fragment() {
         viewModel.user.observe(viewLifecycleOwner) {
             binding.personName.text = it.name
             binding.personEmail.text = it.email
+            binding.personRank.text = "#9 in Karol Bagh"
         }
         binding.logout.setOnClickListener {
             Utils.logout(requireActivity())
